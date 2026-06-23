@@ -16,19 +16,24 @@ if (!existsSync(implPath)) {
 await import(`file://${implPath}`);
 
 async function readEncodedImplementation() {
+  const chunks = await readSequentialFiles("run-mode1-edit.impl.b64.chunk", 2);
+  if (chunks.length) return chunks.join("");
+
   const singleFile = join(scriptDir, "run-mode1-edit.impl.b64");
   if (existsSync(singleFile)) return await readFile(singleFile, "utf8");
 
-  const parts = [];
+  const parts = await readSequentialFiles("run-mode1-edit.impl.b64.part", 2);
+  if (parts.length) return parts.join("");
+
+  throw new Error("Missing run-mode1-edit implementation: expected .impl.b64, .chunkNN, or .partNN files.");
+}
+
+async function readSequentialFiles(prefix, width) {
+  const files = [];
   for (let index = 1; ; index += 1) {
-    const partPath = join(scriptDir, `run-mode1-edit.impl.b64.part${String(index).padStart(2, "0")}`);
-    if (!existsSync(partPath)) break;
-    parts.push(await readFile(partPath, "utf8"));
+    const path = join(scriptDir, `${prefix}${String(index).padStart(width, "0")}`);
+    if (!existsSync(path)) break;
+    files.push(await readFile(path, "utf8"));
   }
-
-  if (!parts.length) {
-    throw new Error("Missing run-mode1-edit implementation: expected .impl.b64 or .impl.b64.partNN files.");
-  }
-
-  return parts.join("");
+  return files;
 }
