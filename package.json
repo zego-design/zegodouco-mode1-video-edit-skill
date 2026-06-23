@@ -1,0 +1,16 @@
+{
+  "name": "mode1-video-edit-skill",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "mode1:run": "node scripts/run-mode1-edit.mjs",
+    "mode1:validate": "node scripts/validate-edit-qa.mjs --output output --write true",
+    "mode1:demo": "node scripts/run-mode1-edit.mjs --source examples/ZEGOMCP.mp4 --plan examples/zegomcp-edit_plan.json --output output/final.mp4",
+    "test:imports": "node -e \"import('./scripts/video-edit-executor.mjs').then(() => console.log('imports ok'))\""
+  },
+  "dependencies": {
+    "ffmpeg-static": "^5.2.0",
+    "sharp": "^0.35.2"
+  }
+}
