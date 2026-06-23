@@ -1,0 +1,100 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Mode 1 Edit Plan",
+  "type": "object",
+  "required": ["title", "source", "output", "actions", "qaChecks"],
+  "properties": {
+    "title": { "type": "string" },
+    "source": {
+      "type": "object",
+      "required": ["path"],
+      "properties": {
+        "path": { "type": "string" },
+        "expectedWidth": { "type": "number" },
+        "expectedHeight": { "type": "number" },
+        "expectedFps": { "type": "number" },
+        "expectedDurationSec": { "type": "number" }
+      }
+    },
+    "output": {
+      "type": "object",
+      "properties": {
+        "width": { "type": "number" },
+        "height": { "type": "number" },
+        "fps": { "type": "number" },
+        "codec": { "type": "string" },
+        "pixelFormat": { "type": "string" }
+      }
+    },
+    "actions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "type"],
+        "properties": {
+          "id": { "type": "string" },
+          "bindToActionId": { "type": "string" },
+          "type": {
+            "type": "string",
+            "enum": ["cut", "speed", "speed-up", "slow-down", "freeze", "caption", "highlight", "zoom", "note", "keep"]
+          },
+          "sourceStartSec": { "type": "number" },
+          "sourceEndSec": { "type": "number" },
+          "sourceAtSec": { "type": "number" },
+          "outputStartSec": { "type": "number" },
+          "outputEndSec": { "type": "number" },
+          "durationSec": { "type": "number" },
+          "speed": { "type": "number" },
+          "scale": { "type": "number" },
+          "fontSize": { "type": "number" },
+          "text": { "type": "string" },
+          "expectedTarget": { "type": "string" },
+          "interactionIntent": {
+            "type": "string",
+            "enum": ["actual-click", "pre-click-guidance", "focus-only", "typing-focus", "result-focus"]
+          },
+          "visualStyle": {
+            "type": "object",
+            "properties": {
+              "emphasis": { "type": "string" },
+              "captionAlign": { "type": "string" },
+              "strokeWidth": { "type": "number" }
+            }
+          },
+          "sourceTimeAdjusted": {
+            "type": "object",
+            "required": ["requestedRange", "actualSourceRange", "reason"],
+            "properties": {
+              "requestedRange": { "type": "string" },
+              "actualSourceRange": { "type": "string" },
+              "reason": { "type": "string" }
+            }
+          },
+          "targetBox": { "$ref": "#/$defs/box" },
+          "captionBox": { "$ref": "#/$defs/box" },
+          "zoomBox": { "$ref": "#/$defs/box" },
+          "outputBox": { "$ref": "#/$defs/box" },
+          "qaFrame": { "type": "boolean" },
+          "allowDynamicHighlight": { "type": "boolean" },
+          "note": { "type": "string" }
+        }
+      }
+    },
+    "qaChecks": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  },
+  "$defs": {
+    "box": {
+      "type": "object",
+      "required": ["x", "y", "width", "height"],
+      "properties": {
+        "x": { "type": "number" },
+        "y": { "type": "number" },
+        "width": { "type": "number" },
+        "height": { "type": "number" }
+      }
+    }
+  }
+}
