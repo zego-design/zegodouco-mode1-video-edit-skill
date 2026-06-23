@@ -31,9 +31,13 @@ async function readEncodedImplementation() {
 async function readSequentialFiles(prefix, width) {
   const files = [];
   for (let index = 1; ; index += 1) {
-    const path = join(scriptDir, `${prefix}${String(index).padStart(width, "0")}`);
+    const suffix = String(index).padStart(width, "0");
+    const path = join(scriptDir, `${prefix}${suffix}`);
     if (!existsSync(path)) break;
     files.push(await readFile(path, "utf8"));
+
+    const tailPath = join(scriptDir, `${prefix}${suffix}.tail`);
+    if (existsSync(tailPath)) files.push(await readFile(tailPath, "utf8"));
   }
   return files;
 }
