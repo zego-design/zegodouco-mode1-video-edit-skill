@@ -1,0 +1,54 @@
+{
+  "version": 1,
+  "title": "ZEGOMCP 视频后期修改 Demo",
+  "source": {
+    "path": "examples/ZEGOMCP.mp4",
+    "expectedWidth": 1280,
+    "expectedHeight": 720,
+    "expectedFps": 60,
+    "expectedDurationSec": 197.16
+  },
+  "output": {
+    "path": "output/final.mp4",
+    "width": 1280,
+    "height": 720,
+    "fps": 60,
+    "codec": "libx264",
+    "pixelFormat": "yuv420p"
+  },
+  "actions": [
+    { "id": "keep-before-cut", "type": "keep", "sourceStartSec": 0, "sourceEndSec": 15, "expectedTarget": "保留开场内容" },
+    { "id": "keep-after-cut-to-tools", "type": "keep", "sourceStartSec": 17, "sourceEndSec": 30, "expectedTarget": "删除 0:15-0:17 后继续播放到 ZEGO tools 区域" },
+    { "id": "freeze-zego-tools", "type": "freeze", "sourceAtSec": 30, "durationSec": 3, "expectedTarget": "ZEGO(6) tools 面板内容", "interactionIntent": "focus-only" },
+    { "id": "keep-to-create-rule", "type": "keep", "sourceStartSec": 30, "sourceEndSec": 36, "expectedTarget": "进入规则创建入口" },
+    { "id": "freeze-create-rule-file", "type": "freeze", "sourceAtSec": 36, "durationSec": 2, "expectedTarget": "Create new rule file 按钮", "interactionIntent": "pre-click-guidance" },
+    { "id": "keep-to-paste-rule", "type": "keep", "sourceStartSec": 36, "sourceEndSec": 49.3, "expectedTarget": "粘贴 ZEGO 相关规则文件内容前后的操作" },
+    { "id": "slow-zoom-in-transition", "type": "speed", "sourceStartSec": 49.3, "sourceEndSec": 51.8, "speed": 0.42, "expectedTarget": "0:50 附近放大过渡调慢，避免突兀" },
+    { "id": "keep-rule-content-review", "type": "keep", "sourceStartSec": 51.8, "sourceEndSec": 63, "expectedTarget": "保留规则内容查看过程" },
+    { "id": "slow-zoom-out-transition", "type": "speed", "sourceStartSec": 63, "sourceEndSec": 65.4, "speed": 0.42, "expectedTarget": "1:04 附近缩小过渡调慢，避免突兀" },
+    { "id": "keep-before-first-speed", "type": "keep", "sourceStartSec": 65.4, "sourceEndSec": 80, "expectedTarget": "保留进入后续输入流程" },
+    { "id": "speed-first-long-section", "type": "speed", "sourceStartSec": 80, "sourceEndSec": 118, "speed": 3, "expectedTarget": "1:20-1:58 三倍速播放" },
+    { "id": "keep-before-typing-focus", "type": "keep", "sourceStartSec": 118, "sourceEndSec": 149, "expectedTarget": "保留输入区域出现前后的操作" },
+    { "id": "speed-second-long-section", "type": "speed", "sourceStartSec": 149, "sourceEndSec": 178, "speed": 3, "expectedTarget": "2:29-2:58 三倍速播放" },
+    { "id": "keep-ending", "type": "keep", "sourceStartSec": 178, "sourceEndSec": 197.16, "expectedTarget": "保留结尾" },
+    { "id": "highlight-add-zego-mcp-server", "type": "highlight", "sourceStartSec": 20, "durationSec": 2.4, "allowDynamicHighlight": true, "targetBox": { "x": 422, "y": 512, "width": 362, "height": 134 }, "expectedTarget": "添加 ZEGO MCP Server 的当前操作位置", "interactionIntent": "focus-only" },
+    { "id": "highlight-zego-tools", "type": "highlight", "bindToActionId": "freeze-zego-tools", "targetBox": { "x": 422, "y": 388, "width": 365, "height": 252 }, "expectedTarget": "ZEGO(6) tools 面板中的全部工具内容", "interactionIntent": "focus-only" },
+    { "id": "zoom-create-rule-file", "type": "zoom", "bindToActionId": "freeze-create-rule-file", "zoomBox": { "x": 402, "y": 184, "width": 230, "height": 58 }, "outputBox": { "x": 420, "y": 168, "width": 455, "height": 116 }, "expectedTarget": "局部放大 Create new rule file 按钮", "interactionIntent": "pre-click-guidance" },
+    { "id": "note-create-rule-click-hint", "type": "note", "bindToActionId": "freeze-create-rule-file", "text": "点这里", "fontSize": 24, "captionBox": { "x": 888, "y": 204, "width": 104, "height": 42 }, "expectedTarget": "提醒观众点击 Create new rule file 按钮", "interactionIntent": "pre-click-guidance" },
+    { "id": "caption-paste-rule-content", "type": "caption", "sourceStartSec": 42, "durationSec": 2, "text": "粘贴 ZEGO 相关的规则文件内容", "fontSize": 28, "captionBox": { "x": 395, "y": 612, "width": 490, "height": 54 }, "expectedTarget": "粘贴规则文件内容的当前操作说明", "interactionIntent": "focus-only" },
+    { "id": "caption-first-3x", "type": "caption", "sourceStartSec": 80, "sourceEndSec": 118, "text": "3 倍速播放中", "fontSize": 24, "captionBox": { "x": 524, "y": 26, "width": 232, "height": 44 }, "expectedTarget": "第一段三倍速播放提示", "interactionIntent": "focus-only" },
+    { "id": "highlight-typing-area", "type": "highlight", "sourceStartSec": 123, "durationSec": 4, "allowDynamicHighlight": true, "targetBox": { "x": 470, "y": 392, "width": 808, "height": 58 }, "expectedTarget": "正在输入的区域", "interactionIntent": "typing-focus" },
+    { "id": "caption-second-3x", "type": "caption", "sourceStartSec": 149, "sourceEndSec": 178, "text": "3 倍速播放中", "fontSize": 24, "captionBox": { "x": 524, "y": 26, "width": 232, "height": 44 }, "expectedTarget": "第二段三倍速播放提示", "interactionIntent": "focus-only" }
+  ],
+  "qaChecks": [
+    "删除源视频 0:15-0:17。",
+    "0:20 添加 ZEGO MCP Server 当前操作位置出现蓝色框提醒。",
+    "0:30 冻结 3 秒并框住 ZEGO(6) tools 内容。",
+    "0:36 冻结 2 秒，局部放大 Create new rule file 按钮并提示点这里。",
+    "0:42 当前操作说明出现 2 秒且不遮挡主体。",
+    "0:50 和 1:04 附近过渡慢放，视觉更自然。",
+    "1:20-1:58 和 2:29-2:58 三倍速播放并显示字幕。",
+    "2:01 正在输入区域蓝框出现 4 秒。",
+    "框选与动效保持极简统一，不遮挡主体。"
+  ]
+}
